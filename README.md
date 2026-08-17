@@ -1,4 +1,4 @@
-# lista
+# Simple TO DO list
 
 Aplicación de terminal (TUI) para gestionar listas de tareas con sub-secciones y sub-tareas anidadas. Permite crear, abrir y marcar listas en cualquier directorio del sistema, almacenadas como archivos Markdown estándar que cualquier modelo de IA puede leer directamente.
 

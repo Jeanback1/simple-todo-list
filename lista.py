@@ -184,7 +184,7 @@ class InputModal(ModalScreen):
 # -------------------------------------------------------------------- app ----
 
 class ListaApp(App):
-    TITLE = "lista"
+    TITLE = "Simple TO DO list"
     CSS = """
     Screen { background: #1e1e2e; }
     #main-view { margin: 1 2; color: #cdd6f4; height: auto; }
