@@ -23,8 +23,8 @@ La aplicación se instala en un entorno virtual propio para no interferir con el
 
 ```bash
 # 1. Clona el repositorio
-git clone https://github.com/Jeanback1/lista.git
-cd lista
+git clone https://github.com/Jeanback1/simple-todo-list.git
+cd simple-todo-list
 
 # 2. Crea el entorno virtual e instala Textual
 python3 -m venv venv
@@ -96,6 +96,51 @@ Las listas se guardan como checklist Markdown estándar. Un elemento con sub-tar
 ## Fase 2
 - [ ] Lanzar
 ```
+
+## Uso con agentes de IA
+
+Simple TO DO list está diseñada para que un modelo de IA (agente) pueda leer y mantener las listas directamente. Como cada lista es un archivo Markdown con formato estándar, un agente puede procesarlas sin conversión previa y sin abrir la interfaz gráfica.
+
+### Lectura por un agente
+
+El subcomando `ver` imprime la lista completa en texto plano, respetando sub-secciones y anidación:
+
+```bash
+lista ver ~/documentos/tareas.md
+```
+
+El agente lee la salida, identifica los pendientes y puede responder agrupando por sección (por ejemplo: "te falta Manzanas en Frutas y Leche en Lácteos").
+
+### Edición por un agente
+
+Como el formato es Markdown puro, el agente puede modificar el archivo directamente:
+
+- Marcar un elemento: cambiar `- [ ] Texto` por `- [x] Texto`. Si el elemento tiene sub-tareas, deben marcarse todas para que el padre se considere completado (el estado del padre es derivado).
+- Añadir un elemento raíz: insertar `- [ ] Texto` en la sección correspondiente.
+- Añadir una sub-tarea: insertar `  - [ ] Texto` (dos espacios) bajo el elemento padre.
+- Añadir una sección: insertar `## Nombre` al final.
+
+Para ediciones programáticas es recomendable parsear el archivo en estructura de árbol, modificar los nodos y volver a serializar, respetando así el orden y la anidación.
+
+### Configurar un agente de IA para usarla
+
+El agente debe tener acceso al comando `lista` y a los archivos de las listas. La configuración depende de cada plataforma, pero el patrón general es:
+
+1. Instalar la aplicación (ver sección Instalación) en la misma máquina donde corre el agente, o en una máquina a la que el agente pueda acceder por SSH.
+2. Darle al agente una instrucción permanente o un "skill" que indique cómo usar el comando. Ejemplo de instrucción para el agente:
+
+```
+Para gestionar listas de tareas, usa el comando `lista`:
+- lista ver <ruta>       para leer una lista (responde agrupando por secciones)
+- lista secciones <ruta> para ver el resumen por secciones
+- Edita el archivo .md directamente para marcar o añadir elementos,
+  respetando la indentación (2 espacios por nivel) y la regla de que
+  un elemento con sub-tareas se completa solo cuando todas lo están.
+```
+
+3. Si el agente corre en una máquina distinta a la de las listas, asegurarse de que pueda ejecutar el comando por SSH sobre el usuario dueño de los archivos (usando rutas absolutas).
+
+Algunas plataformas (como Hermes Agent) permiten crear una skill persistente con estas instrucciones, de modo que el agente las cargue automáticamente cuando el usuario le pida interactuar con sus listas.
 
 ## Documentación
 
