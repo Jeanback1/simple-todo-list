@@ -1,0 +1,23 @@
+# Entorno virtual
+venv/
+.venv/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Archivos de listas de usuario (datos personales)
+# Las listas NO se suben al repositorio; se guardan en rutas del usuario.
+*.md
+!docs/**/*.md
+!README.md
+
+# Editores y sistemas
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Entorno
+.env
